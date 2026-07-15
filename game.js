@@ -22,23 +22,50 @@
     { id: "mint", hex: "#55efc4", pattern: "diagonal" },
   ];
 
+  /**
+   * New shapes unlock at levels 3, 7, 10, 15, 20, 25…
+   * Levels in between are softer practice on known art so the campaign lasts longer.
+   */
   const ART_CYCLE = [
-    "circle", "square", "star", "heart", "diamond",
-    "flower", "moon", "sunset", "galaxy", "prism",
+    "circle", "square", "triangle", "star", "hexagon",
+    "heart", "spiral", "diamond", "flower", "leaf",
+    "moon", "crystal", "sunset", "galaxy", "crown", "prism",
   ];
 
-  // Classic campaign
+  // Classic campaign — 25 levels, gentle ramp, new shape milestones
   const CLASSIC_LEVELS = [
-    { name: "Dot", cols: 2, rows: 2, matchSize: 2, flashMs: 1000, ghostMs: 600, previewMs: 900, peeks: 0, focus: false, art: "circle", tip: "Hit 2 of the same color in a row. Break a streak and a solved color can return." },
-    { name: "Square", cols: 3, rows: 2, matchSize: 2, flashMs: 900, ghostMs: 400, previewMs: 700, peeks: 1, focus: false, art: "square", tip: "Two same colors in a row. Switch too early and your last solved color comes back." },
-    { name: "Star", cols: 3, rows: 3, matchSize: 3, flashMs: 900, ghostMs: 0, previewMs: 600, peeks: 1, focus: true, art: "star", tip: "Focus: one color at a time. Still need 2-in-a-row streaks." },
-    { name: "Heart", cols: 4, rows: 3, matchSize: 2, flashMs: 850, ghostMs: 0, previewMs: 0, peeks: 1, focus: false, art: "heart", tip: "Free-form pairs — broken streaks undo your last solve." },
-    { name: "Diamond", cols: 4, rows: 3, matchSize: 3, flashMs: 800, ghostMs: 250, previewMs: 500, peeks: 2, focus: false, art: "diamond", tip: "Triples. Land 2 in a row before you digress." },
-    { name: "Flower", cols: 4, rows: 4, matchSize: 2, flashMs: 750, ghostMs: 0, previewMs: 0, peeks: 1, focus: false, art: "flower", tip: "Bigger board — streak discipline matters more." },
-    { name: "Moon", cols: 4, rows: 4, matchSize: 4, flashMs: 800, ghostMs: 0, previewMs: 800, peeks: 2, focus: true, art: "moon", tip: "Quads + focus. Use the opening glance." },
-    { name: "Sunset", cols: 5, rows: 4, matchSize: 2, flashMs: 700, ghostMs: 0, previewMs: 0, peeks: 2, focus: false, art: "sunset", tip: "Lots of pairs — chain them without breaking streaks." },
-    { name: "Galaxy", cols: 5, rows: 4, matchSize: 4, flashMs: 650, ghostMs: 0, previewMs: 400, peeks: 1, focus: false, art: "galaxy", tip: "Quads. Two in a row keeps solved colors safe." },
-    { name: "Prism", cols: 6, rows: 4, matchSize: 3, flashMs: 600, ghostMs: 0, previewMs: 0, peeks: 2, focus: false, art: "prism", tip: "Finale — unlock the prism without losing solves." },
+    // ── 1–2: warm-up ──
+    { name: "Dot", cols: 2, rows: 2, matchSize: 2, flashMs: 1100, ghostMs: 700, previewMs: 1000, peeks: 1, focus: false, art: "circle", tip: "Warm-up. Match pairs. 2-in-a-row streaks keep solves safe." },
+    { name: "Tile", cols: 3, rows: 2, matchSize: 2, flashMs: 1050, ghostMs: 550, previewMs: 850, peeks: 1, focus: false, art: "square", tip: "A few more pieces. Still pairs, long flashes." },
+    // ── 3: NEW shape ──
+    { name: "Triangle", cols: 3, rows: 2, matchSize: 2, flashMs: 1000, ghostMs: 500, previewMs: 900, peeks: 2, focus: false, art: "triangle", tip: "New shape! Same easy pairs — enjoy the reveal." },
+    { name: "Echo", cols: 3, rows: 2, matchSize: 2, flashMs: 980, ghostMs: 400, previewMs: 700, peeks: 1, focus: false, art: "circle", tip: "Practice on the dot again. Build streak habits." },
+    { name: "Gridlet", cols: 3, rows: 3, matchSize: 3, flashMs: 980, ghostMs: 350, previewMs: 750, peeks: 2, focus: false, art: "square", tip: "First triples — gentle pace, extra peeks." },
+    { name: "Spark", cols: 3, rows: 3, matchSize: 3, flashMs: 950, ghostMs: 300, previewMs: 650, peeks: 2, focus: false, art: "triangle", tip: "Triples on the triangle. Stay calm." },
+    // ── 7: NEW shape ──
+    { name: "Hexagon", cols: 4, rows: 3, matchSize: 2, flashMs: 950, ghostMs: 350, previewMs: 800, peeks: 2, focus: false, art: "hexagon", tip: "New shape! Bigger board, but only pairs." },
+    { name: "Beacon", cols: 4, rows: 3, matchSize: 2, flashMs: 920, ghostMs: 250, previewMs: 500, peeks: 2, focus: false, art: "star", tip: "Stars under soft pairs. Flash a little shorter." },
+    { name: "Nest", cols: 4, rows: 3, matchSize: 3, flashMs: 900, ghostMs: 250, previewMs: 600, peeks: 2, focus: false, art: "hexagon", tip: "Triples on the hex — still plenty of peeks." },
+    // ── 10: NEW shape ──
+    { name: "Spiral", cols: 4, rows: 3, matchSize: 2, flashMs: 900, ghostMs: 200, previewMs: 700, peeks: 2, focus: false, art: "spiral", tip: "New shape! Easy pairs to unlock the spiral." },
+    { name: "Pulse", cols: 4, rows: 4, matchSize: 2, flashMs: 880, ghostMs: 200, previewMs: 500, peeks: 2, focus: false, art: "heart", tip: "16 pieces, pairs only. Take your time." },
+    { name: "Facet", cols: 4, rows: 3, matchSize: 3, flashMs: 860, ghostMs: 150, previewMs: 500, peeks: 2, focus: false, art: "diamond", tip: "Triples return — ghost tint helps a little." },
+    { name: "Bloom", cols: 4, rows: 4, matchSize: 2, flashMs: 850, ghostMs: 100, previewMs: 400, peeks: 2, focus: false, art: "flower", tip: "Flower pairs. Streak discipline over speed." },
+    { name: "Coil", cols: 4, rows: 4, matchSize: 4, flashMs: 880, ghostMs: 200, previewMs: 750, peeks: 3, focus: false, art: "spiral", tip: "First quads — slow flashes and 3 peeks." },
+    // ── 15: NEW shape ──
+    { name: "Leaf", cols: 4, rows: 4, matchSize: 2, flashMs: 850, ghostMs: 200, previewMs: 650, peeks: 2, focus: false, art: "leaf", tip: "New shape! Soft pairs under the leaf." },
+    { name: "Orbit", cols: 4, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "moon", tip: "Moon pairs. Ghosts off — pure memory." },
+    { name: "Grove", cols: 5, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 100, previewMs: 450, peeks: 2, focus: false, art: "leaf", tip: "Wider board, still pairs." },
+    { name: "Focus Beam", cols: 4, rows: 3, matchSize: 3, flashMs: 840, ghostMs: 0, previewMs: 600, peeks: 2, focus: true, art: "hexagon", tip: "Focus mode: one color at a time." },
+    { name: "Horizon", cols: 5, rows: 4, matchSize: 2, flashMs: 800, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "sunset", tip: "Sunset pairs. Board is getting big." },
+    // ── 20: NEW shape ──
+    { name: "Crystal", cols: 5, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crystal", tip: "New shape! Soft landing with peeks and pairs." },
+    { name: "Nebula", cols: 5, rows: 4, matchSize: 4, flashMs: 800, ghostMs: 100, previewMs: 550, peeks: 2, focus: false, art: "galaxy", tip: "Galaxy quads — use the preview." },
+    { name: "Shard", cols: 5, rows: 4, matchSize: 4, flashMs: 780, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "crystal", tip: "Crystal quads. Shorter window." },
+    { name: "Refract", cols: 6, rows: 4, matchSize: 3, flashMs: 760, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "prism", tip: "Prism triples on a wide board." },
+    { name: "Deep Field", cols: 6, rows: 4, matchSize: 3, flashMs: 740, ghostMs: 0, previewMs: 300, peeks: 2, focus: true, art: "galaxy", tip: "Focus + triples. Almost there." },
+    // ── 25: NEW shape / campaign crest ──
+    { name: "Crown", cols: 6, rows: 4, matchSize: 3, flashMs: 780, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crown", tip: "New shape finale! Unlock the crown — you've earned it." },
   ];
 
   function cloneLevel(L, patch = {}) {
@@ -436,13 +463,19 @@
     const palettes = {
       circle: ["#1a1030", "#2d1b4e"],
       square: ["#0f1c2e", "#1a3a5c"],
+      triangle: ["#1a1428", "#3a2458"],
       star: ["#1c1028", "#3d1f5c"],
+      hexagon: ["#0e1a28", "#1a3a48"],
       heart: ["#2a1020", "#5c1a3a"],
+      spiral: ["#14102a", "#2a1a50"],
       diamond: ["#0e1e28", "#1a4a5c"],
       flower: ["#1a1e14", "#3a4a28"],
+      leaf: ["#0e1a12", "#1a3a24"],
       moon: ["#0c1020", "#1a2848"],
+      crystal: ["#101828", "#1a3050"],
       sunset: ["#2a1420", "#5c2a18", "#8c4a10"],
       galaxy: ["#080818", "#1a0a40", "#0a2040"],
+      crown: ["#201810", "#4a3018"],
       prism: ["#101018", "#2a1840", "#103040"],
     };
     const stops = palettes[kind] || ["#12141c", "#1e2438"];
@@ -461,11 +494,20 @@
       case "square":
         drawRoundedRect(-w * 0.22, -w * 0.22, w * 0.44, w * 0.44, 18, "#54a0ff", "#2ed573");
         break;
+      case "triangle":
+        drawTriangle(0, 0, w * 0.3, "#ff9ff3", "#a55eea");
+        break;
       case "star":
         drawStar(0, 0, 5, w * 0.28, w * 0.12, "#ffb020", "#ff6b6b");
         break;
+      case "hexagon":
+        drawPolygon(0, 0, 6, w * 0.26, "#3dd6c6", "#54a0ff");
+        break;
       case "heart":
         drawHeart(0, w * 0.04, w * 0.26, "#ff6b8a", "#ff9ff3");
+        break;
+      case "spiral":
+        drawSpiral(0, 0, w * 0.28, "#7c6cff", "#18dcff");
         break;
       case "diamond":
         drawDiamond(0, 0, w * 0.26, "#18dcff", "#a55eea");
@@ -473,15 +515,24 @@
       case "flower":
         drawFlower(0, 0, w * 0.12, 6, "#ff9ff3", "#7bed9f", "#ffb020");
         break;
+      case "leaf":
+        drawLeaf(0, 0, w * 0.28, "#2ed573", "#7bed9f");
+        break;
       case "moon":
         drawMoon(0, 0, w * 0.26, "#f6e58d", "#a55eea");
         drawStarsField(w, h, 28);
+        break;
+      case "crystal":
+        drawCrystal(0, 0, w * 0.24, "#18dcff", "#a55eea", "#ffffff");
         break;
       case "sunset":
         drawSunset(w, h);
         break;
       case "galaxy":
         drawGalaxy(w, h);
+        break;
+      case "crown":
+        drawCrown(0, 0, w * 0.32, "#ffb020", "#f6e58d", "#ff6b6b");
         break;
       case "prism":
         drawPrism(w, h);
@@ -520,6 +571,144 @@
     ctx.strokeStyle = "rgba(255,255,255,0.4)";
     ctx.lineWidth = 3;
     ctx.stroke();
+  }
+
+  function drawTriangle(x, y, s, c1, c2) {
+    const g = ctx.createLinearGradient(x, y - s, x, y + s * 0.6);
+    g.addColorStop(0, c1);
+    g.addColorStop(1, c2);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(x, y - s * 0.75);
+    ctx.lineTo(x + s * 0.85, y + s * 0.55);
+    ctx.lineTo(x - s * 0.85, y + s * 0.55);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  function drawPolygon(x, y, sides, r, c1, c2) {
+    const g = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
+    g.addColorStop(0, c1);
+    g.addColorStop(1, c2);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    for (let i = 0; i < sides; i++) {
+      const a = (Math.PI * 2 * i) / sides - Math.PI / 2;
+      const px = x + Math.cos(a) * r;
+      const py = y + Math.sin(a) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  function drawSpiral(x, y, maxR, c1, c2) {
+    ctx.strokeStyle = c1;
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    const turns = 3.2;
+    const steps = 90;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const a = t * turns * Math.PI * 2;
+      const r = t * maxR;
+      const px = x + Math.cos(a) * r;
+      const py = y + Math.sin(a) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = c2;
+    ctx.lineWidth = 2.5;
+    ctx.globalAlpha = 0.7;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = c2;
+    ctx.beginPath();
+    ctx.arc(x, y, maxR * 0.08, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawLeaf(x, y, s, c1, c2) {
+    const g = ctx.createLinearGradient(x - s, y, x + s, y);
+    g.addColorStop(0, c1);
+    g.addColorStop(1, c2);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(x, y - s * 0.85);
+    ctx.bezierCurveTo(x + s * 0.7, y - s * 0.4, x + s * 0.65, y + s * 0.35, x, y + s * 0.85);
+    ctx.bezierCurveTo(x - s * 0.65, y + s * 0.35, x - s * 0.7, y - s * 0.4, x, y - s * 0.85);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y - s * 0.7);
+    ctx.quadraticCurveTo(x + s * 0.08, y, x, y + s * 0.7);
+    ctx.strokeStyle = "rgba(0,0,0,0.2)";
+    ctx.stroke();
+  }
+
+  function drawCrystal(x, y, s, c1, c2, c3) {
+    const g = ctx.createLinearGradient(x, y - s, x, y + s);
+    g.addColorStop(0, c3);
+    g.addColorStop(0.35, c1);
+    g.addColorStop(1, c2);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(x, y - s);
+    ctx.lineTo(x + s * 0.55, y - s * 0.15);
+    ctx.lineTo(x + s * 0.4, y + s * 0.85);
+    ctx.lineTo(x - s * 0.4, y + s * 0.85);
+    ctx.lineTo(x - s * 0.55, y - s * 0.15);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.5)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y - s);
+    ctx.lineTo(x, y + s * 0.85);
+    ctx.strokeStyle = "rgba(255,255,255,0.25)";
+    ctx.stroke();
+  }
+
+  function drawCrown(x, y, s, c1, c2, jewel) {
+    const g = ctx.createLinearGradient(x, y - s * 0.5, x, y + s * 0.4);
+    g.addColorStop(0, c2);
+    g.addColorStop(1, c1);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(x - s * 0.55, y + s * 0.25);
+    ctx.lineTo(x - s * 0.55, y - s * 0.05);
+    ctx.lineTo(x - s * 0.28, y + s * 0.12);
+    ctx.lineTo(x, y - s * 0.45);
+    ctx.lineTo(x + s * 0.28, y + s * 0.12);
+    ctx.lineTo(x + s * 0.55, y - s * 0.05);
+    ctx.lineTo(x + s * 0.55, y + s * 0.25);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // jewels
+    [[0, -s * 0.28], [-s * 0.35, s * 0.02], [s * 0.35, s * 0.02]].forEach(([jx, jy], i) => {
+      ctx.fillStyle = i === 0 ? jewel : "#18dcff";
+      ctx.beginPath();
+      ctx.arc(x + jx, y + jy, s * 0.07, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    // band
+    ctx.fillStyle = c1;
+    ctx.fillRect(x - s * 0.55, y + s * 0.22, s * 1.1, s * 0.12);
   }
 
   function drawStar(x, y, points, outer, inner, c1, c2) {
@@ -1256,6 +1445,16 @@
     updateArtProgress();
     updateHud(level);
     showScreen("game");
+
+    // Celebrate milestone shapes (levels 3, 7, 10, 15, 20, 25…)
+    const n = mode === "endless" ? endlessWave : levelIndex + 1;
+    const shapeMilestones = [3, 7, 10, 15, 20, 25, 30, 35, 40];
+    if (
+      (mode === "classic" || mode === "kids" || mode === "challenge" || mode === "photo") &&
+      shapeMilestones.includes(n)
+    ) {
+      toast(`New shape: ${level.name}!`);
+    }
 
     await runPreview(level);
     levelStartTime = performance.now();

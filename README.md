@@ -20,7 +20,7 @@ This repo is set up for **GitHub Pages** from the `main` branch root:
 
 | Mode | Description |
 |------|-------------|
-| **Classic** | 10-level campaign with rising twists |
+| **Classic** | 25-level campaign; new shapes at 3, 7, 10, 15, 20, 25 |
 | **Kids** | Longer flashes, ghost tints, extra peeks, no focus pressure |
 | **Challenge** | Faster flashes, fewer peeks, more focus levels |
 | **Daily** | One seeded puzzle per calendar day (same layout for everyone) |
