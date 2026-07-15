@@ -23,49 +23,62 @@
   ];
 
   /**
-   * New shapes unlock at levels 3, 7, 10, 15, 20, 25…
-   * Levels in between are softer practice on known art so the campaign lasts longer.
+   * Shape cadence (Classic):
+   *   Early  — every ~3 levels (novelty while learning)
+   *   Mid    — every ~3–4 levels
+   *   Late   — every ~4 levels (room to master harder boards)
+   * Milestones: 3 → 6 → 9 → 12 → 16 → 20 → 24
+   * Levels between are softer practice on known art.
    */
+  const SHAPE_MILESTONES = [3, 6, 9, 12, 16, 20, 24];
+
   const ART_CYCLE = [
     "circle", "square", "triangle", "star", "hexagon",
     "heart", "spiral", "diamond", "flower", "leaf",
-    "moon", "crystal", "sunset", "galaxy", "crown", "prism",
+    "moon", "crystal", "sunset", "galaxy", "ring", "crown", "prism",
   ];
 
-  // Classic campaign — 25 levels, gentle ramp, new shape milestones
+  // Classic campaign — 24 levels aligned to the cadence above
   const CLASSIC_LEVELS = [
-    // ── 1–2: warm-up ──
+    // ── Open: learn the loop ──
     { name: "Dot", cols: 2, rows: 2, matchSize: 2, flashMs: 1100, ghostMs: 700, previewMs: 1000, peeks: 1, focus: false, art: "circle", tip: "Warm-up. Match pairs. 2-in-a-row streaks keep solves safe." },
     { name: "Tile", cols: 3, rows: 2, matchSize: 2, flashMs: 1050, ghostMs: 550, previewMs: 850, peeks: 1, focus: false, art: "square", tip: "A few more pieces. Still pairs, long flashes." },
-    // ── 3: NEW shape ──
-    { name: "Triangle", cols: 3, rows: 2, matchSize: 2, flashMs: 1000, ghostMs: 500, previewMs: 900, peeks: 2, focus: false, art: "triangle", tip: "New shape! Same easy pairs — enjoy the reveal." },
-    { name: "Echo", cols: 3, rows: 2, matchSize: 2, flashMs: 980, ghostMs: 400, previewMs: 700, peeks: 1, focus: false, art: "circle", tip: "Practice on the dot again. Build streak habits." },
+
+    // ── L3 NEW ──
+    { name: "Triangle", cols: 3, rows: 2, matchSize: 2, flashMs: 1000, ghostMs: 500, previewMs: 900, peeks: 2, focus: false, art: "triangle", tip: "New shape! Easy pairs — enjoy the reveal." },
+    { name: "Echo", cols: 3, rows: 2, matchSize: 2, flashMs: 980, ghostMs: 400, previewMs: 700, peeks: 1, focus: false, art: "circle", tip: "Practice streak habits on a familiar shape." },
     { name: "Gridlet", cols: 3, rows: 3, matchSize: 3, flashMs: 980, ghostMs: 350, previewMs: 750, peeks: 2, focus: false, art: "square", tip: "First triples — gentle pace, extra peeks." },
-    { name: "Spark", cols: 3, rows: 3, matchSize: 3, flashMs: 950, ghostMs: 300, previewMs: 650, peeks: 2, focus: false, art: "triangle", tip: "Triples on the triangle. Stay calm." },
-    // ── 7: NEW shape ──
-    { name: "Hexagon", cols: 4, rows: 3, matchSize: 2, flashMs: 950, ghostMs: 350, previewMs: 800, peeks: 2, focus: false, art: "hexagon", tip: "New shape! Bigger board, but only pairs." },
-    { name: "Beacon", cols: 4, rows: 3, matchSize: 2, flashMs: 920, ghostMs: 250, previewMs: 500, peeks: 2, focus: false, art: "star", tip: "Stars under soft pairs. Flash a little shorter." },
-    { name: "Nest", cols: 4, rows: 3, matchSize: 3, flashMs: 900, ghostMs: 250, previewMs: 600, peeks: 2, focus: false, art: "hexagon", tip: "Triples on the hex — still plenty of peeks." },
-    // ── 10: NEW shape ──
-    { name: "Spiral", cols: 4, rows: 3, matchSize: 2, flashMs: 900, ghostMs: 200, previewMs: 700, peeks: 2, focus: false, art: "spiral", tip: "New shape! Easy pairs to unlock the spiral." },
-    { name: "Pulse", cols: 4, rows: 4, matchSize: 2, flashMs: 880, ghostMs: 200, previewMs: 500, peeks: 2, focus: false, art: "heart", tip: "16 pieces, pairs only. Take your time." },
-    { name: "Facet", cols: 4, rows: 3, matchSize: 3, flashMs: 860, ghostMs: 150, previewMs: 500, peeks: 2, focus: false, art: "diamond", tip: "Triples return — ghost tint helps a little." },
-    { name: "Bloom", cols: 4, rows: 4, matchSize: 2, flashMs: 850, ghostMs: 100, previewMs: 400, peeks: 2, focus: false, art: "flower", tip: "Flower pairs. Streak discipline over speed." },
-    { name: "Coil", cols: 4, rows: 4, matchSize: 4, flashMs: 880, ghostMs: 200, previewMs: 750, peeks: 3, focus: false, art: "spiral", tip: "First quads — slow flashes and 3 peeks." },
-    // ── 15: NEW shape ──
-    { name: "Leaf", cols: 4, rows: 4, matchSize: 2, flashMs: 850, ghostMs: 200, previewMs: 650, peeks: 2, focus: false, art: "leaf", tip: "New shape! Soft pairs under the leaf." },
-    { name: "Orbit", cols: 4, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "moon", tip: "Moon pairs. Ghosts off — pure memory." },
-    { name: "Grove", cols: 5, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 100, previewMs: 450, peeks: 2, focus: false, art: "leaf", tip: "Wider board, still pairs." },
-    { name: "Focus Beam", cols: 4, rows: 3, matchSize: 3, flashMs: 840, ghostMs: 0, previewMs: 600, peeks: 2, focus: true, art: "hexagon", tip: "Focus mode: one color at a time." },
-    { name: "Horizon", cols: 5, rows: 4, matchSize: 2, flashMs: 800, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "sunset", tip: "Sunset pairs. Board is getting big." },
-    // ── 20: NEW shape ──
-    { name: "Crystal", cols: 5, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crystal", tip: "New shape! Soft landing with peeks and pairs." },
-    { name: "Nebula", cols: 5, rows: 4, matchSize: 4, flashMs: 800, ghostMs: 100, previewMs: 550, peeks: 2, focus: false, art: "galaxy", tip: "Galaxy quads — use the preview." },
-    { name: "Shard", cols: 5, rows: 4, matchSize: 4, flashMs: 780, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "crystal", tip: "Crystal quads. Shorter window." },
-    { name: "Refract", cols: 6, rows: 4, matchSize: 3, flashMs: 760, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "prism", tip: "Prism triples on a wide board." },
-    { name: "Deep Field", cols: 6, rows: 4, matchSize: 3, flashMs: 740, ghostMs: 0, previewMs: 300, peeks: 2, focus: true, art: "galaxy", tip: "Focus + triples. Almost there." },
-    // ── 25: NEW shape / campaign crest ──
-    { name: "Crown", cols: 6, rows: 4, matchSize: 3, flashMs: 780, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crown", tip: "New shape finale! Unlock the crown — you've earned it." },
+
+    // ── L6 NEW ──
+    { name: "Hexagon", cols: 4, rows: 3, matchSize: 2, flashMs: 960, ghostMs: 350, previewMs: 800, peeks: 2, focus: false, art: "hexagon", tip: "New shape! Bigger board, still only pairs." },
+    { name: "Beacon", cols: 4, rows: 3, matchSize: 2, flashMs: 940, ghostMs: 250, previewMs: 550, peeks: 2, focus: false, art: "star", tip: "Star pairs. Flash a little shorter." },
+    { name: "Nest", cols: 4, rows: 3, matchSize: 3, flashMs: 920, ghostMs: 250, previewMs: 600, peeks: 2, focus: false, art: "hexagon", tip: "Triples on the hex — still plenty of help." },
+
+    // ── L9 NEW ──
+    { name: "Spiral", cols: 4, rows: 3, matchSize: 2, flashMs: 920, ghostMs: 250, previewMs: 700, peeks: 2, focus: false, art: "spiral", tip: "New shape! Soft pairs to unlock the spiral." },
+    { name: "Pulse", cols: 4, rows: 4, matchSize: 2, flashMs: 900, ghostMs: 200, previewMs: 500, peeks: 2, focus: false, art: "heart", tip: "16 pieces, pairs only. Take your time." },
+    { name: "Facet", cols: 4, rows: 3, matchSize: 3, flashMs: 880, ghostMs: 150, previewMs: 500, peeks: 2, focus: false, art: "diamond", tip: "Triples with a light ghost tint." },
+
+    // ── L12 NEW ──
+    { name: "Leaf", cols: 4, rows: 4, matchSize: 2, flashMs: 880, ghostMs: 200, previewMs: 650, peeks: 2, focus: false, art: "leaf", tip: "New shape! Easy pairs under the leaf." },
+    { name: "Bloom", cols: 4, rows: 4, matchSize: 2, flashMs: 860, ghostMs: 100, previewMs: 400, peeks: 2, focus: false, art: "flower", tip: "Flower pairs. Streak discipline over speed." },
+    { name: "Coil", cols: 4, rows: 4, matchSize: 4, flashMs: 900, ghostMs: 200, previewMs: 750, peeks: 3, focus: false, art: "spiral", tip: "First quads — slow flashes and 3 peeks." },
+    { name: "Orbit", cols: 4, rows: 4, matchSize: 2, flashMs: 840, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "moon", tip: "Moon pairs. Ghosts off — pure memory." },
+
+    // ── L16 NEW ──
+    { name: "Crystal", cols: 5, rows: 4, matchSize: 2, flashMs: 860, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crystal", tip: "New shape! Soft landing with peeks and pairs." },
+    { name: "Grove", cols: 5, rows: 4, matchSize: 2, flashMs: 840, ghostMs: 100, previewMs: 450, peeks: 2, focus: false, art: "leaf", tip: "Wider board, still pairs." },
+    { name: "Focus Beam", cols: 4, rows: 3, matchSize: 3, flashMs: 860, ghostMs: 0, previewMs: 600, peeks: 2, focus: true, art: "hexagon", tip: "Focus mode: one color at a time." },
+    { name: "Horizon", cols: 5, rows: 4, matchSize: 2, flashMs: 820, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "sunset", tip: "Sunset pairs. Board is getting big." },
+
+    // ── L20 NEW ──
+    { name: "Ring", cols: 5, rows: 4, matchSize: 2, flashMs: 840, ghostMs: 150, previewMs: 650, peeks: 3, focus: false, art: "ring", tip: "New shape! Easy pairs around the ring." },
+    { name: "Nebula", cols: 5, rows: 4, matchSize: 4, flashMs: 820, ghostMs: 100, previewMs: 550, peeks: 2, focus: false, art: "galaxy", tip: "Galaxy quads — use the preview." },
+    { name: "Shard", cols: 5, rows: 4, matchSize: 4, flashMs: 800, ghostMs: 0, previewMs: 400, peeks: 2, focus: false, art: "crystal", tip: "Crystal quads. Shorter window." },
+    { name: "Refract", cols: 6, rows: 4, matchSize: 3, flashMs: 780, ghostMs: 0, previewMs: 350, peeks: 2, focus: false, art: "prism", tip: "Prism triples on a wide board." },
+
+    // ── L24 NEW / crest ──
+    { name: "Crown", cols: 6, rows: 4, matchSize: 3, flashMs: 800, ghostMs: 150, previewMs: 700, peeks: 3, focus: false, art: "crown", tip: "Campaign crest — unlock the crown. You've earned it." },
   ];
 
   function cloneLevel(L, patch = {}) {
@@ -475,6 +488,7 @@
       crystal: ["#101828", "#1a3050"],
       sunset: ["#2a1420", "#5c2a18", "#8c4a10"],
       galaxy: ["#080818", "#1a0a40", "#0a2040"],
+      ring: ["#101820", "#1a3040"],
       crown: ["#201810", "#4a3018"],
       prism: ["#101018", "#2a1840", "#103040"],
     };
@@ -530,6 +544,9 @@
         break;
       case "galaxy":
         drawGalaxy(w, h);
+        break;
+      case "ring":
+        drawRing(0, 0, w * 0.28, w * 0.14, "#3dd6c6", "#7c6cff");
         break;
       case "crown":
         drawCrown(0, 0, w * 0.32, "#ffb020", "#f6e58d", "#ff6b6b");
@@ -679,6 +696,33 @@
     ctx.lineTo(x, y + s * 0.85);
     ctx.strokeStyle = "rgba(255,255,255,0.25)";
     ctx.stroke();
+  }
+
+  function drawRing(x, y, outer, inner, c1, c2) {
+    const g = ctx.createLinearGradient(x - outer, y - outer, x + outer, y + outer);
+    g.addColorStop(0, c1);
+    g.addColorStop(1, c2);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, outer, 0, Math.PI * 2);
+    ctx.arc(x, y, inner, 0, Math.PI * 2, true);
+    ctx.fill("evenodd");
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x, y, outer, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x, y, inner, 0, Math.PI * 2);
+    ctx.stroke();
+    // soft glow
+    ctx.strokeStyle = c1;
+    ctx.globalAlpha = 0.25;
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.arc(x, y, (outer + inner) / 2, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
   }
 
   function drawCrown(x, y, s, c1, c2, jewel) {
@@ -1446,12 +1490,11 @@
     updateHud(level);
     showScreen("game");
 
-    // Celebrate milestone shapes (levels 3, 7, 10, 15, 20, 25…)
+    // Celebrate shape milestones (cadence in SHAPE_MILESTONES)
     const n = mode === "endless" ? endlessWave : levelIndex + 1;
-    const shapeMilestones = [3, 7, 10, 15, 20, 25, 30, 35, 40];
     if (
-      (mode === "classic" || mode === "kids" || mode === "challenge" || mode === "photo") &&
-      shapeMilestones.includes(n)
+      (mode === "classic" || mode === "kids" || mode === "challenge") &&
+      SHAPE_MILESTONES.includes(n)
     ) {
       toast(`New shape: ${level.name}!`);
     }
