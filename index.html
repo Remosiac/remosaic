@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remosaic — Color Memory Puzzle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Title -->
+    <section id="screen-title" class="screen active">
+      <div class="title-glow"></div>
+      <div class="title-card title-card-wide">
+        <div class="title-top">
+          <p class="eyebrow">Memory · Color · Reveal</p>
+          <button type="button" class="btn btn-icon btn-settings" id="btn-settings" title="Settings" aria-label="Settings">⚙</button>
+        </div>
+        <h1>Remosaic</h1>
+        <p class="tagline">
+          Flash colors, match sets, unlock the picture.
+          Classic path, daily seed, endless climb — or your own photo.
+        </p>
+
+        <div class="mode-grid">
+          <button type="button" class="mode-card" data-mode="classic">
+            <span class="mode-icon">▶</span>
+            <span class="mode-name">Classic</span>
+            <span class="mode-desc">10 levels, rising twists</span>
+          </button>
+          <button type="button" class="mode-card" data-mode="kids">
+            <span class="mode-icon">☀</span>
+            <span class="mode-name">Kids</span>
+            <span class="mode-desc">Bigger flashes, ghosts, peeks</span>
+          </button>
+          <button type="button" class="mode-card" data-mode="challenge">
+            <span class="mode-icon">⚡</span>
+            <span class="mode-name">Challenge</span>
+            <span class="mode-desc">Faster, fewer peeks, focus</span>
+          </button>
+          <button type="button" class="mode-card" data-mode="daily">
+            <span class="mode-icon">📅</span>
+            <span class="mode-name">Daily</span>
+            <span class="mode-desc" id="daily-label">Same puzzle for everyone today</span>
+          </button>
+          <button type="button" class="mode-card" data-mode="endless">
+            <span class="mode-icon">∞</span>
+            <span class="mode-name">Endless</span>
+            <span class="mode-desc">Waves get harder forever</span>
+          </button>
+          <button type="button" class="mode-card" data-mode="photo" id="btn-photo-mode">
+            <span class="mode-icon">🖼</span>
+            <span class="mode-name">Your photo</span>
+            <span class="mode-desc">Upload a picture to unlock</span>
+          </button>
+        </div>
+
+        <input type="file" id="photo-input" accept="image/*" hidden />
+        <p id="photo-status" class="photo-status hidden"></p>
+
+        <button type="button" class="btn btn-ghost" id="btn-how">How to play</button>
+      </div>
+    </section>
+
+    <!-- How -->
+    <section id="screen-how" class="screen">
+      <div class="panel panel-scroll">
+        <h2>How to play</h2>
+        <ol class="rules">
+          <li><strong>Click pieces</strong> to flash their color (and pattern, if enabled).</li>
+          <li><strong>Match a full set</strong> of the same color — pairs, triples, or quads.</li>
+          <li><strong>2 in a row</strong> — hit the same color twice in a row. If you switch colors before that, your <em>last fully solved color</em> comes back onto the board (one step back, not a full reset).</li>
+          <li><strong>Matched pieces clear</strong> and reveal the picture underneath.</li>
+          <li><strong>Clear the board</strong> to unlock the image and finish the level.</li>
+        </ol>
+        <h3 class="subhead">Modes</h3>
+        <ul class="rules rules-ul">
+          <li><strong>Classic / Kids / Challenge</strong> — same journey, different difficulty knobs.</li>
+          <li><strong>Daily</strong> — one seeded puzzle per calendar day (compare scores with friends).</li>
+          <li><strong>Endless</strong> — infinite waves; board and match size ramp up.</li>
+          <li><strong>Your photo</strong> — hide a personal image under the mosaic.</li>
+        </ul>
+        <h3 class="subhead">Twists &amp; helpers</h3>
+        <ul class="rules rules-ul">
+          <li><strong>Preview / Ghost / Focus / Peeks</strong> change per level.</li>
+          <li><strong>Patterns</strong> (settings) add stripes &amp; dots for colorblind-friendly play.</li>
+          <li><strong>P</strong> peek · <strong>R</strong> restart</li>
+        </ul>
+        <button type="button" class="btn btn-primary" id="btn-how-back">Got it</button>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="screen-settings" class="screen">
+      <div class="panel">
+        <h2>Settings</h2>
+        <label class="toggle-row">
+          <span>
+            <strong>Sound</strong>
+            <small>Soft blips on flash, match, win</small>
+          </span>
+          <input type="checkbox" id="opt-sound" checked />
+        </label>
+        <label class="toggle-row">
+          <span>
+            <strong>Haptics</strong>
+            <small>Vibrate on match (phones that support it)</small>
+          </span>
+          <input type="checkbox" id="opt-haptics" checked />
+        </label>
+        <label class="toggle-row">
+          <span>
+            <strong>Color patterns</strong>
+            <small>Stripes, dots, grids — not only hue</small>
+          </span>
+          <input type="checkbox" id="opt-patterns" checked />
+        </label>
+        <label class="toggle-row">
+          <span>
+            <strong>Count marks</strong>
+            <small>Dot on pieces already counted toward a set</small>
+          </span>
+          <input type="checkbox" id="opt-marks" checked />
+        </label>
+        <p class="hint settings-hint">Settings save in this browser.</p>
+        <button type="button" class="btn btn-primary" id="btn-settings-back">Done</button>
+      </div>
+    </section>
+
+    <!-- Game -->
+    <section id="screen-game" class="screen">
+      <header class="hud">
+        <div class="hud-left">
+          <button type="button" class="btn btn-icon" id="btn-menu" title="Menu" aria-label="Menu">☰</button>
+          <div class="level-meta">
+            <span class="level-label" id="hud-mode-label">Level</span>
+            <span id="hud-level">1</span>
+            <span id="hud-name" class="level-name">Dot</span>
+          </div>
+        </div>
+        <div class="hud-center">
+          <div class="stat">
+            <span class="stat-label">Match</span>
+            <span id="hud-match" class="stat-value">2</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Peeks</span>
+            <span id="hud-peeks" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Streak</span>
+            <span id="hud-streak" class="stat-value">0/2</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Moves</span>
+            <span id="hud-moves" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Left</span>
+            <span id="hud-left" class="stat-value">0</span>
+          </div>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-peek">Peek</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-restart">Restart</button>
+        </div>
+      </header>
+
+      <div id="hud-twist" class="twist-row" aria-label="Level twists"></div>
+
+      <div class="stage-wrap">
+        <div class="stage" id="stage">
+          <canvas id="art-canvas" aria-hidden="true"></canvas>
+          <div id="board" class="board" role="grid" aria-label="Puzzle board"></div>
+          <div id="win-overlay" class="win-overlay hidden">
+            <div class="win-card">
+              <p class="win-eyebrow" id="win-eyebrow">Picture unlocked</p>
+              <div id="win-stars" class="win-stars" aria-label="Stars">★★★</div>
+              <h2 id="win-title">Level complete</h2>
+              <p id="win-stats" class="win-stats"></p>
+              <div class="win-actions">
+                <button type="button" class="btn btn-primary" id="btn-next">Next level</button>
+                <button type="button" class="btn btn-ghost" id="btn-replay">Replay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="game-footer">
+        <p id="hud-tip">Click a piece to flash its color. Match a full set to lock them in.</p>
+      </footer>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
