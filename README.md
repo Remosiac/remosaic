@@ -2,7 +2,7 @@
 
 A flexible color-memory picture puzzle. Flash piece colors, match sets, and unlock the art underneath.
 
-**Play online:** [https://remosaic.github.io/remosaic/](https://remosaic.github.io/remosaic/)  
+**Play online:** [https://remosiac.github.io/remosaic/](https://remosiac.github.io/remosaic/)  
 (Works on iPhone Safari — use Share → Add to Home Screen for an app-like icon.)
 
 Or open `index.html` locally — no install or server required.
@@ -14,7 +14,7 @@ This repo is set up for **GitHub Pages** from the `main` branch root:
 1. Repo **Settings → Pages**
 2. Source: **Deploy from a branch**
 3. Branch: `main` / `/ (root)`
-4. Save — site goes live at `https://remosaic.github.io/remosaic/`
+4. Save — site goes live at `https://remosiac.github.io/remosaic/`
 
 ## Modes
 
